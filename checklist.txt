@@ -1,0 +1,9 @@
+-maak database 
+-
+
+
+-implementatie
+ -kijken naar je navigatie en functies
+ -kijken naar je navigatie kijken hoeveel files je moet maken
+ -forms maken
+ -

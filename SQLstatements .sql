@@ -2,7 +2,7 @@ CREATE DATABASE flowerpower;
 
 USE flowerpower;
 
-CREATE TABLE Klant (
+CREATE TABLE klant (
     klantcode INT NOT NULL AUTO_INCREMENT,
     voorletters VARCHAR(255) NOT NULL,
     tussenvoegsel VARCHAR(255),
@@ -27,19 +27,19 @@ CREATE TABLE factuur (
 CREATE TABLE artikel (
     artikelcode INT NOT NULL AUTO_INCREMENT,
     artikel VARCHAR(255) NOT NULL,
-    prijs DECIMAL NOT NULL,
+    prijs DECIMAL(3,2) NOT NULL,
     PRIMARY KEY(artikelcode)
 );
 
 CREATE TABLE factuurregel (
     factuurnummer INT NOT NULL AUTO_INCREMENT,
     aantal INT NOT NULL,
-    pijs INT NOT NULL,
+    prijs DECIMAL(3,2) NOT NULL,
     factuur_factuurnummer INT NOT NULL,
     artikel_artikelcode INT NOT NULL,
+    PRIMARY KEY(factuurnummer),
     FOREIGN KEY (factuur_factuurnummer) REFERENCES factuur(factuurnummer),
-    FOREIGN KEY (artikel_artikelcode) REFERENCES artikel(artikelcode),
-    PRIMARY KEY(factuurnummer)
+    FOREIGN KEY (artikel_artikelcode) REFERENCES artikel(artikelcode)
 );
 
 
@@ -64,23 +64,16 @@ CREATE TABLE medewerkers (
 );
 
 CREATE TABLE bestelling (
-    aantal INT NOT NULL AUTO_INCREMENT,
-    afgehaald DATE NOT NULL,
+    bestellingid INT NOT NULL AUTO_INCREMENT,
+    aantal INT NOT NULL,
+    afgehaald SMALLINT NOT NULL,
     winkel_winkelcode INT NOT NULL,
     medewerkers_medewerkerscode INT NOT NULL,
     klant_klantcode INT NOT NULL,
     artikel_artikelcode INT NOT NULL,
+    PRIMARY KEY(bestellingid),
     FOREIGN KEY (winkel_winkelcode) REFERENCES winkel(winkelcode),
     FOREIGN KEY (medewerkers_medewerkerscode) REFERENCES medewerkers(medewerkerscode),
     FOREIGN KEY (klant_klantcode) REFERENCES klant(klantcode),
-    FOREIGN KEY (artikel_artikelcode) REFERENCES artikel(artikelcode),
-    PRIMARY KEY(aantal)
+    FOREIGN KEY (artikel_artikelcode) REFERENCES artikel(artikelcode)
 );
-
-
-
-
-
-
-
-

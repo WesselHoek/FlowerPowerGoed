@@ -1,0 +1,39 @@
+a {
+    color: black;
+}
+
+.rand {
+    padding: 0;
+    margin: 0;
+}
+
+.ruimte {
+    padding-top: 250px;
+}
+
+.footer_ruimte {
+    padding-top: 20px;
+}
+
+.blur {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+}
+
+.page-footer {
+    border: 2px;
+    background-color: #45b201;
+}
+
+.footer-copyright {
+    background-color: #2d6d03;
+}
+
+.text {
+    color:white;
+}
+
+.borders {
+    padding: 20px;
+}
+
