@@ -1,9 +1,18 @@
 -maak database 
--
 
+Maak een overzicht_artikelen.php bestand aan. Deze pagina moet uiteindelijk een tabel (overzicht) bevatten. Zorg ervoor dat je de skeleton van de file in orde hebt. 
+Maak een overzicht_medewerker.php bestand aan. Deze pagina moet uiteindelijk een tabel (overzicht) bevatten. Zorg ervoor dat je de skeleton van de file in orde hebt.
 
--implementatie
- -kijken naar je navigatie en functies
- -kijken naar je navigatie kijken hoeveel files je moet maken
- -forms maken
- -
+Implementeer de login voor de medewerker:
+Controleer de credentials van de medewerker en geef toegang als de ingevoerde informatie juist is. Als de informatie incorrect is, vang je dit op een correcte (en dus veilige manier af).
+Als de informatie correct is, wordt de medewerker naar een medewerker.php bestand verwezen. Zorg ervoor dat deze pagina de volgende menu items bevat:
+Overzicht artikelen (opent overzicht_artikelen.php)
+Overzicht medewerker (opent overzicht_medewerker.php)
+Lijst bestellingen per winkel<-
+Maak een artikel_bestellen.php bestand aan. Zorg ervoor dat je de skeleton van de file in orde hebt.<-
+Maak een register.php bestand aan, met daarin de juiste registration-fields (zie ERD van technisch ontwerp). Zorg ervoor dat de register menu option in index.php hiernaar verwijst.
+Implementeer de login van de klant:
+Controleer de credentials van de medewerker en geef toegang als de ingevoerde informatie juist is. Als de informatie incorrect is, vang je dit op een correcte (en dus veilige manier af).
+Als de informatie (username + password) correct is, zorg je ervoor dat de klant wordt doorverwezen naar klant.php. Zorg ervoor dat deze pagina de volgende menu items bevat:
+Artikelen bestellen (artikel_bestellen.php)
+Klantgegevens wijzigen (register.php)

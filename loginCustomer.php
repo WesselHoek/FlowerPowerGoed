@@ -6,18 +6,37 @@ session_start();
 
 // include the database class
 include "database.php";
+
+// this inserts the header and the navbar
 require_once('header.php');
-
-
 
 // $title contains the title for the page
 $title = "Login";
 
-// this inserts the header and the navbar
-//require_once('header.php');  
 
-// start a new db connection
-$db = new DB('localhost', 'root', '', 'flowerpower', 'utf8');
+if(isset($_POST['submit'])){
+
+    $fields = ['uname', 'pword'];
+
+    $error = false;
+
+    foreach($fields as $field){
+        if(!isset($_POST[$field]) || empty($_POST[$field])){
+         $error = true;
+    }
+}
+
+if(!$error){
+    // store posted form values in variables
+    $username= $_POST['uname'];
+    $password= $_POST['pword'];
+        
+    $database = new database();
+    // login function
+    $database->logincustomer($username, $password);
+ }
+}
+
 
 ?>
 <head>
@@ -34,34 +53,30 @@ $db = new DB('localhost', 'root', '', 'flowerpower', 'utf8');
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
+
 <body class="text-center" cz-shortcut-listen="true">
-    <?php
-        // if $message is set then echo it
-        if(isset($message)){
-            echo '<label class="test-danger">' . $message . '</label>';
-        }
-    ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-7" style="padding: 0;">
                 <img class="img-fluid blur" style="float: left;" src="image/bloemenvelden.jpg" alt="bloemenvelden">
             </div>
 
-        <div class="col-3 ruimte">
+        <div class="col-2 ruimte border shadow p-3 mb-5 bg-white rounded loginheight">
             <form class="form-signin" action="" method="post">
+            <img class="userlogin"  src="image/user.png" alt="userlogin">
             <h1 class="h3 mb-3 font-weight-normal">Log in</h1>
 
                 <label for="text" >Gebruikersnaam</label>
-                <input type="text" name="text" class="form-control" placeholder="Email address" required="" autofocus="" autocomplete="off">
+                <input type="text" name="uname" class="form-control" placeholder="Email address" required="" autofocus="" autocomplete="off">
                 <br>
 
                 <label for="Password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password" required="" autocomplete="off">
+                <input type="password" name="pword" class="form-control" placeholder="Wachtwoord" required="" autocomplete="off">
                 <br>
                 
-                <input type="submit" name="login" class="btn btn-lg btn-success btn-block" value="Login">
+                <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="Login">
                 <br>
-                <a href="registreren.php" id="zwart" role="button">Geen account? Registreren</a>
+                <a href="register.php" id="zwart" role="button">Geen account? Registreren</a>
 
             </form>
         </div>

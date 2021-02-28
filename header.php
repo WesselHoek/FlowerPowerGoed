@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
 
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -23,15 +21,20 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="index.php" class="nav-item nav-link active">Home</a>
                     <a href="loginEmployee.php" class="nav-item nav-link">Inloggen Medewerkers</a>
                     <a href="contact.php" class="nav-item nav-link">Contact</a>
                     <a href="loginCustomer.php" class="nav-item nav-link">Inloggen Klant</a>
-                    <a href="registreren.php" class="nav-item nav-link">Registreren</a>
+                    <a href="register.php" class="nav-item nav-link">Registreren</a>
                 </div>
+                    <form class="form-inline ml-auto">
+                        <div class="navbar-nav">
+                            <a href="logout.php" class="float-right nav-item nav-link">Logout</a>
+                        </div>
+                    </form>
             </div>
         </nav>
     </div>
