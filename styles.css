@@ -7,16 +7,27 @@ a {
     margin: 0;
 }
 
-.ruimte {
-    padding-top: 200px;
-}
-
 .ruim {
     padding-top: 100px;
 }
 
+.spacing {
+    margin-top: 5em;
+}
+
 .footer_ruimte {
-    padding-top: 20px;
+    padding-top: 1.5em;
+
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    top: 140%;
+    height: 24%;
+    left: 0;
+    clear: both;
 }
 
 .blur {
@@ -57,7 +68,7 @@ a {
 }
 
 .registreer {
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 .imagelogin {
@@ -66,8 +77,8 @@ a {
 }
 
 .imagespace {
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 250px;
+    margin-bottom: 0px;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -76,4 +87,8 @@ a {
   width: 100%;
   max-width: 500px;
   height: 400px;
+}
+
+.none {
+    display: none;
 }

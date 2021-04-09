@@ -1,7 +1,5 @@
 <?php
 session_start();
-unset($_SESSION["medewerkerscode"]);
-unset($_SESSION["uname"]);
-unset($_SESSION["klantcode"]);
+session_unset();
 header("Location:index.php");
 ?>

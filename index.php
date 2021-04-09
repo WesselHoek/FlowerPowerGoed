@@ -3,11 +3,11 @@
     require_once('header.php');
 
     include "database.php";
+
 ?>
 
 <body>
 <div class="containter-fluid">
-<div class="col-3"><a href="medewerkerExcel.php" class="nav-item nav-link">exel</a></div>
     <div class="row">
         <div class="col-3"></div>
         <div class="col-3 bg-white rounded imagespace center" style="padding: 0; float:left;">

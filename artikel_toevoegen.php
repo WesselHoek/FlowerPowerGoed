@@ -1,19 +1,17 @@
 <?php
 //index.php
 
+// start the session
+session_start();
+
 // include the database class
 include "database.php";
 
-// this inserts the header and the navbar
 require_once('header.php');
-
-// $title contains the title for the page
-$title = "Login";
-
 
 if(isset($_POST['submit'])){
 
-    $fields = ['unames', 'pword'];
+    $fields = ['artikel', 'prijs'];
 
     $error = false;
 
@@ -25,21 +23,22 @@ if(isset($_POST['submit'])){
 
 if(!$error){
     // store posted form values in variables
-    $username= $_POST['unames'];
-    $password= $_POST['pword'];
+    $artikel= $_POST['artikel'];
+    $prijs= $_POST['prijs'];
+
+
+
         
     $database = new database();
     // login function
-    $database->logincustomer($username, $password);
+    $database->artikel_toevoegen($artikel, $prijs);
  }
 }
-
-
 ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Medewerker toevoegen</title>
 
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -51,37 +50,35 @@ if(!$error){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 
-<body class="text-center" cz-shortcut-listen="true">
-    <div class="container-fluid">
+<body> 
+<div class="container-fluid">
         <div class="row">
-            <div class="col-7" style="padding: 0;">
+            <div class="col-7">
                 <img class="img-fluid blur" style="float: left;" src="image/bloemenvelden.jpg" alt="bloemenvelden">
             </div>
 
-        <div class="col-2 ruimte border shadow p-3 mb-5 bg-white rounded loginheight">
+        <div class="col-3 ruimte border shadow p-3 mb-5 bg-white rounded registreer">
+        
             <form class="form-signin" action="" method="post">
-            <img class="userlogin"  src="image/user.png" alt="userlogin">
-            <h1 class="h3 mb-3 font-weight-normal">Log in</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Artikel toevoegen</h1>
 
-                <label for="text" >Gebruikersnaam</label>
-                <input type="text" name="unames" class="form-control" placeholder="Email address" required="" autofocus="" autocomplete="off">
+                <label for="artikel">Artikel</label>
+                <input type="text" name="artikel" class="form-control" required="">
                 <br>
 
-                <label for="Password">Password</label>
-                <input type="password" name="pword" class="form-control" placeholder="Wachtwoord" required="" autocomplete="off">
+                <label for="prijs">Prijs</label>
+                <input type="number" name="prijs" class="form-control" required="">
                 <br>
-                
-                <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="Login">
-                <br>
-                <a href="register.php" id="zwart" role="button">Geen account? Registreren</a>
 
+                <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="submit">
             </form>
+            <br>
+            <button type="button" class="btn btn-primary btn-lg btn btn-light"><a href="medewerker.php">terug</a></button>
         </div>
     </div>
-</div>
+</div>  
 </body>
 
-</html>
 <?php
 require_once('footer.php');
 ?>

@@ -5,6 +5,7 @@ class database{
     private $database;
     private $username;
     private $password;
+    private $charset;
     private $conn;
 
 function __construct() {
@@ -12,17 +13,21 @@ function __construct() {
     $this->database ='flowerpower';
     $this->username ='root';
     $this->password ='';
+    $this->charset = 'utf8mb4';
+
+    $options = [
+        PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION, 
+        PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC, 
+        PDO::ATTR_EMULATE_PREPARES => false, 
+     ];
 
     try{
-        $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->database", $this->username, $this->password,);
+        $dsn = "mysql:host=$this->servername;dbname=$this->database;charset=$this->charset";
 
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->conn = new PDO($dsn, $this->username, $this->password, $options);
 
-        echo"<br>";
-        echo"connected successfully";
-        echo"<br>";
-    }   catch(PDOException $e) {
-        echo "connection failed" . $e->getMessage();
+    }   catch(\PDOException $e) {
+            throw new \PDOException("Error  message is: ". $e->getMessage());
     }
         
 }
@@ -47,6 +52,23 @@ function insert_admin(){
     ]);
 }
 
+function registreer_medewerker($voorletters, $voorvoegsel, $achternaam, $uname, $psw){
+
+    $sql = "INSERT INTO medewerkers VALUE (:medewerkerscode, :voorletters, :voorvoegsel, :achternaam, :gebruikersnaam, :wachtwoord);";
+
+    $stmt = $this->conn->prepare($sql); // checkt syntax van sql string en prepared op server
+
+    // executes prepared statements, passes values to named placeholders from sql string on line 51
+    $stmt->execute([
+        'medewerkerscode'=>NULL,
+        'voorletters' => $voorletters,
+        'voorvoegsel' => $voorvoegsel,
+        'achternaam' => $achternaam,
+        'gebruikersnaam' => $uname,
+        'wachtwoord' => password_hash($psw, PASSWORD_DEFAULT)
+    ]);
+  
+}
 
 function registreer_klant($voorletters, $tussenvoegsel, $achternaam, $adres ,$postcode ,$woonplaats ,$geboortedatum, $uname, $psw){
 
@@ -67,8 +89,50 @@ function registreer_klant($voorletters, $tussenvoegsel, $achternaam, $adres ,$po
             'gebruikersnaam' => $uname,
             'wachtwoord' => password_hash($psw, PASSWORD_DEFAULT)
         ]);
+
+        header('location: loginCustomer.php');
       
 }
+
+// bestelling inserten in database
+function bestellen($winkelcode, $artikelcode, $aantal, $medewerkerscode){
+    // bestellingid, aantal, afgehaald, winkelcode, medewerkerscode, klantcode artikelcode
+    $sql = "INSERT INTO bestelling VALUES (:bestellingid, :aantal, :afgehaald, :winkelcode, :medewerkerscode, :klantcode, :artikelcode)";
+    print_r($sql);
+    $stmt = $this->conn->prepare($sql); // checkt syntax van sql string en prepared op server
+    print_r($stmt);
+    // executes prepared statements, passes values to named placeholders from sql string on line 51
+    $stmt->execute([
+        'bestellingid'=>NULL,
+        'aantal' => $aantal,
+        'afgehaald'=>0,
+        'winkelcode' => $winkelcode, //fixme: winkelcode
+        'artikelcode' => $artikelcode, //fixme: artikelcode
+        'medewerkerscode' => $medewerkerscode, //fixme: medewerkerscode
+        'klantcode'=>$_SESSION['klantcode']
+
+    ]);
+    header('location: klant.php');
+  
+}
+
+
+function artikel_toevoegen($artikel, $prijs){
+
+    $sql = "INSERT INTO artikel VALUES (:artikelcode, :artikel, :prijs)";
+
+    $stmt = $this->conn->prepare($sql); // checkt syntax van sql string en prepared op server
+
+    // executes prepared statements, passes values to named placeholders from sql string 
+    $stmt->execute([
+        'artikelcode'=>NULL,
+        'artikel' => $artikel,
+        'prijs' => $prijs
+    ]);
+  
+}
+
+
 
 public function loginmedewerker($uname, $psw){
 
@@ -94,6 +158,7 @@ public function loginmedewerker($uname, $psw){
                 session_start();
                 $_SESSION['medewerkerscode'] = $result['id'];
                 $_SESSION['uname'] = $result['gebruikersnaam'];
+                $_SESSION['logged_in'] = true;
 
                 header('location: medewerker.php');
 
@@ -131,51 +196,21 @@ public function logincustomer($uname, $psw){
             if ($uname == $result['gebruikersnaam'] && password_verify($psw, $result['wachtwoord'])) {
 
                 session_start();
-                $_SESSION['medewerkerscode'] = $result['id'];
+                $_SESSION['klantcode'] = $result['klantcode'];
                 $_SESSION['uname'] = $result['gebruikersnaam'];
-
+                $_SESSION['logged_in'] = true;
                 header('location: klant.php');
 
             }
         }else{
-            echo 'faild to login.';
+            echo 'failed to login.';
         }
 
     }else{
-        echo 'Faild to login. please check you input and try again.';
+        echo 'Failed to login. please check you input and try again.';
     }
 
 }
-
-public function winkel_select(){
-
-
-    $sql = "SELECT winkelcode ,winkelnaam FROM winkel";
-    
-    $stmt = $this->conn->prepare($sql);
-    
-    $stmt->execute();
-    
-    $winkels = $stmt->fetchAll();
-
-    return $winkels;
-}
-
-
-public function artikel_select(){
-
-
-    $sql = "SELECT artikelcode ,artikel, prijs FROM artikel";
-    
-    $stmt = $this->conn->prepare($sql);
-    
-    $stmt->execute();
-    
-    $artikels = $stmt->fetchAll();
-
-    return $artikels;
-}
-
 
 public function select($statment, $named_placeholder){
 
@@ -195,8 +230,5 @@ public function update_or_delete($statement, $named_placeholder){
     exit();
 
 }
-
-
-
 
 }

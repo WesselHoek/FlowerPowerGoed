@@ -1,53 +1,96 @@
 <?php
 //index.php
 
-// start the session
-session_start();
-
 // include the database class
 include "database.php";
 
 require_once('header.php');
 
-$db = new database();
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
 
-$winkels=$db->artikel_select();
+    $fields = ['winkelcode', 'artikelcode', 'aantal', 'medewerkerscode'];
+
+    $error = false;
+
+    foreach($fields as $field){
+        if(!isset($_POST[$field]) || empty($_POST[$field])){
+         $error = true;
+    }
+}
+
+if(!$error){
+    // store posted form values in variables
+    $winkelcode= $_POST['winkelcode'];
+    $artikelcode= $_POST['artikelcode'];
+    $aantal= $_POST['aantal'];
+    $medewerkerscode= $_POST['medewerkerscode'];
+    print_r($_POST);
+    $database = new database();
+    // fixme: should supply more arguments
+    // btw also fix number of params of bestellen()
+    $database->bestellen($winkelcode, $artikelcode, $aantal, $medewerkerscode);
+
+ }
+}
+
+
 ?>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</head>
-
-<body>
-<div class="containter-fluid">
-<button type="button" class="btn btn-primary btn-lg btn btn-light"><a href="medewerker.php">terug</a></button>
-    <div class="row">
-        <div class="col-3"></div>
-
-        <div class="col-5">
-            <select name="winkel" class="form-control form-control-lg">
-                <?php foreach ($artikels as $artikel): ?>
-                    <option><?=$artikels["artikelcode"]?><?=$artikels["artikel"]?><?=$artikels["prijs"]?></option>
-                <?php endforeach ?>
-            </select>
-        </div>
-
-        <div class="col-3"></div>
-    </div>
+<body> 
+<div class="none">
+<?php
+$database = new database();
+$vestigingen = $database->select("SELECT winkelcode, winkelplaats, winkelnaam FROM winkel", []);
+$artikel = $database->select("SELECT artikelcode, artikel, prijs FROM artikel", []);
+$medewerkers = $database->select("SELECT medewerkerscode, gebruikersnaam, achternaam FROM medewerkers", []);
+?>
 </div>
+
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-7">
+                <img class="img-fluid blur" style="float: left;" src="image/bloemenvelden.jpg" alt="bloemenvelden">
+            </div>
+
+        <div class="col-3 border shadow p-3 mb-5 bg-white rounded registreer">
+            <form class="form-signin" action="artikel_bestellen.php" method="post">
+            <h1 class="h3 mb-3 font-weight-normal">Artikel Bestellen</h1>
+
+                <label for="winkel">winkel</label>
+                <select name="winkelcode" class="form-control form-control-lg">
+                <?php foreach ($vestigingen as $vestigingen): ?>
+                    <option value="<?=$vestigingen["winkelcode"]?>"><?=$vestigingen["winkelplaats"]?> <?=$vestigingen["winkelnaam"]?></option>
+                <?php endforeach ?>
+                </select>
+                <br>
+
+                <label for="winkel">Artikel</label>
+                <select name="artikelcode" class="form-control form-control-lg">
+                <?php foreach ($artikel as $artikel): ?>
+                    <option value="<?=$artikel["artikelcode"]?>"><?=$artikel["artikel"]?> <?=$artikel["prijs"]?></option>
+                <?php endforeach ?>
+                </select>
+                <br>
+ 
+                <label for="aantal">Aantal</label>
+                <input type="text" name="aantal" class="form-control">
+                <br>
+
+                <label for="winkelcode">Medewerker</label>
+                <select name="medewerkerscode" class="form-control form-control-lg">
+                <?php foreach ($medewerkers as $medewerkers): ?>
+                    <option value="<?=$medewerkers["medewerkerscode"]?>"><?=$medewerkers["gebruikersnaam"]?> <?=$medewerkers["achternaam"]?></option>
+                <?php endforeach ?>
+                </select>
+                <br>
+
+                <input type="submit" name="submit" class="btn btn-lg btn-success btn-block" value="submit">
+                <a href="artikel_bestellen.php" id="zwart" class="btn btn-link" role="button">Login</a> 
+            </form>
+        </div>
+    </div>
+</div>  
 </body>
 
 <?php
-// this inserts the header
-    require_once('footer.php');
+require_once('footer.php');
 ?>

@@ -25,14 +25,27 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="index.php" class="nav-item nav-link active">Home</a>
-                    <a href="loginEmployee.php" class="nav-item nav-link">Inloggen Medewerkers</a>
+                    <?php
+                        if(isset($_SESSION)){
+                            if( array_key_exists('logged_in', $_SESSION)){
+                            echo '<a href="medewerker.php" class="nav-item nav-link">Medewerker</a>';
+                    }else{
+                        echo '<a href="loginEmployee.php" class="nav-item nav-link">Inloggen Medewerkers</a>';
+                    }}
+                    ?>
                     <a href="contact.php" class="nav-item nav-link">Contact</a>
-                    <a href="loginCustomer.php" class="nav-item nav-link">Inloggen Klant</a>
+                    <a href="loginCustomer.php" class="nav-item nav-link">Inloggen Klant</a>                   
                     <a href="register.php" class="nav-item nav-link">Registreren</a>
                 </div>
                     <form class="form-inline ml-auto">
                         <div class="navbar-nav">
-                            <a href="logout.php" class="float-right nav-item nav-link">Logout</a>
+                        <?php 
+                        session_start();
+                    if(isset($_SESSION)){
+                        if( array_key_exists('logged_in', $_SESSION)){
+                        echo '<a href="logout.php" class="float-right nav-item nav-link">Logout</a>';
+                    }}
+                    ?>
                         </div>
                     </form>
             </div>

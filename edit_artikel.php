@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-include 'database.php';
+require_once('header.php');
 $db = new database();
 
 if(isset($_GET['artikel_artikelcode'])){
@@ -33,20 +33,24 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 }
 ?>
 
-
-<form action="edit_artikel.php" method="POST">
-<input type="hidden" name="artikelcode" value="<?php echo isset($_GET['artikel_artikelcode']) ? $_GET['artikel_artikelcode'] : '' ?>">
-<!-- ternary operator: https://www.codementor.io/@sayantinideb/ternary-operator-in-php-how-to-use-the-php-ternary-operator-x0ubd3po6 -->
-<!-- 
-artikel is een array met een index 9 (= Array ( [0] => Array ( [id] => 5 [artikel] => bloesem [prijs] => 5.95 ) )). 
-value van de index is een array. Daarom moeten we van artikel de 0e index nemen ($artikel[0]). dat is: Array ( [id] => 5 [artikel] => bloesem [prijs] => 5.95 )
-Van deze array kunnen wij alleen de values ophalen aan de hand van de keys. daarom doen we bijv $artikel[0]['prijs']. -->
-
-<input type="text" name="artikel" placeholder="artikel" value="<?php echo isset($artikel) ? $artikel[0]['artikel'] : ''?>">
-<input type="text" name="prijs" placeholder="prijs" value="<?php echo isset($artikel) ? $artikel[0]['prijs'] : ''?>">
-<input type="submit" value="Edit">
-
-</form>
-    
+<div class="container">
+    <form action="edit_artikel.php" method="POST">
+        <div class="form-group">
+            <input type="hidden" name="artikelcode" value="<?php echo isset($_GET['artikel_artikelcode']) ? $_GET['artikel_artikelcode'] : '' ?>">
+            <!-- ternary operator: https://www.codementor.io/@sayantinideb/ternary-operator-in-php-how-to-use-the-php-ternary-operator-x0ubd3po6 -->
+            <!-- 
+            artikel is een array met een index 9 (= Array ( [0] => Array ( [id] => 5 [artikel] => bloesem [prijs] => 5.95 ) )). 
+            value van de index is een array. Daarom moeten we van artikel de 0e index nemen ($artikel[0]). dat is: Array ( [id] => 5 [artikel] => bloesem [prijs] => 5.95 )
+            Van deze array kunnen wij alleen de values ophalen aan de hand van de keys. daarom doen we bijv $artikel[0]['prijs']. -->
+            <label for="Artikel">Artikel</label>
+            <input type="text" class="form-control" name="artikel" placeholder="artikel" value="<?php echo isset($artikel) ? $artikel[0]['artikel'] : ''?>">
+            <br>
+            <label for="Prijs">Prijs</label>
+            <input type="text" class="form-control" name="prijs" placeholder="prijs" value="<?php echo isset($artikel) ? $artikel[0]['prijs'] : ''?>">
+            <br>
+            <input type="submit" class="btn btn-lg btn-success btn-block" value="Edit">
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -4,7 +4,6 @@ require_once('header.php');
 
 // include the database class
  include "database.php";
- session_start();
 
     $db = new database();
     echo $_SESSION['uname'];
@@ -13,7 +12,7 @@ require_once('header.php');
 <body>
 <div class="containter">
     <div class="row">
-        <div class="col-3"></div>
+        <div class="col-4"></div>
         <div class="col-3">
             <button type="button" class="btn btn-primary btn-lg btn-success"><a href="artikel_bestellen.php">Artikel bestellen</a></button>
         </div>

@@ -1,9 +1,6 @@
 <?php
 //index.php
 
-// start the session
-session_start();
-
 // include the database class
 include "database.php";
 require_once('header.php');  
@@ -63,7 +60,7 @@ $db = new database();
 </div>
 
     
-</body>a
+</body>
 </html>
 
 <?php

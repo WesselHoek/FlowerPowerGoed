@@ -1,9 +1,6 @@
 <?php
 //index.php
 
-// start the session
-session_start();
-
 // include the database class
 include "database.php";
 

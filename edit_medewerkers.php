@@ -37,16 +37,25 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 }
 ?>
 
-
-<form action="edit_medewerkers.php" method="POST">
-<input type="hidden" name="medewerkerscode" value="<?php echo isset($_GET['medewerkers_medewerkerscode']) ? $_GET['medewerkers_medewerkerscode'] : '' ?>">
-<input type="text" name="voorletters" placeholder="voorletters" value="<?php echo isset($medewerker) ? $medewerker[0]['voorletters'] : ''?>">
-<input type="text" name="voorvoegsel" placeholder="voorvoegsel" value="<?php echo isset($medewerker) ? $medewerker[0]['voorvoegsel'] : ''?>">
-<input type="text" name="achternaam" placeholder="achternaam" value="<?php echo isset($medewerker) ? $medewerker[0]['achternaam'] : ''?>">
-<input type="text" name="gebruikersnaam" placeholder="gebruikersnaam" value="<?php echo isset($medewerker) ? $medewerker[0]['gebruikersnaam'] : ''?>">
-<input type="submit" value="Edit">
-
-</form>
-    
+<div class="container">
+    <form action="edit_medewerkers.php" method="POST">
+        <div class="form-group">
+            <input type="hidden" name="medewerkerscode" value="<?php echo isset($_GET['medewerkers_medewerkerscode']) ? $_GET['medewerkers_medewerkerscode'] : '' ?>">
+            <label for="voorletters">Voorletters</label>
+            <input type="text" class="form-control" name="voorletters" placeholder="voorletters" value="<?php echo isset($medewerker) ? $medewerker[0]['voorletters'] : ''?>">
+            <br>
+            <label for="voorvoegsel">Voorvoegsel</label>
+            <input type="text" class="form-control" name="voorvoegsel" placeholder="voorvoegsel" value="<?php echo isset($medewerker) ? $medewerker[0]['voorvoegsel'] : ''?>">
+            <br>
+            <label for="achternaam">Achternaam</label>
+            <input type="text" class="form-control" name="achternaam" placeholder="achternaam" value="<?php echo isset($medewerker) ? $medewerker[0]['achternaam'] : ''?>">
+            <br>
+            <label for="gebruikersnaam">Gebruikersnaam</label>
+            <input type="text" class="form-control" name="gebruikersnaam" placeholder="gebruikersnaam" value="<?php echo isset($medewerker) ? $medewerker[0]['gebruikersnaam'] : ''?>">
+            <br>
+            <input type="submit" class="btn btn-lg btn-success btn-block" value="Edit">
+        </div>
+    </form>
+</div>  
 </body>
 </html>
